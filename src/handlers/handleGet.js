@@ -1,3 +1,5 @@
+import { get } from "../api/get";
+
 export const handleGet = () => {
-  console.log("click");
+  get("tests");
 };
