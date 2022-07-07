@@ -11,5 +11,5 @@ export const handlePost = async (event) => {
   const addPromise = await post(toAdd, addValue);
   console.log("test post", addPromise);
   event.target.parentElement.children[0].value = "";
-  return addPromise;
+  return;
 };

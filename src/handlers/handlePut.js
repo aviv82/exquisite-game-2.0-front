@@ -10,5 +10,5 @@ export const handlePut = async (event) => {
   const updatePromise = await put(toSearch, toUpdate);
   console.log("update test", updatePromise);
   event.target.parentElement.children[0].value = "";
-  return updatePromise;
+  return;
 };
