@@ -1,11 +1,11 @@
-import "./Home.css";
+import "./SignUp.css";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ref, object, string, boolean } from "yup";
 
-import { Button } from "../component/button/Button";
+import { Button } from "../../component/button/Button";
 
-export const Home = () => {
+export const SignUp = () => {
   return (
     <Formik
       initialValues={{

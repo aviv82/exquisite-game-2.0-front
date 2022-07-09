@@ -11,7 +11,7 @@ import { handlePut } from "./handlers/handlePut";
 import { handleDelete } from "./handlers/handleDelete";
 import { handleAuth } from "./handlers/handleAuth";
 
-import { Home } from "./pages/Home";
+import { Home } from "./pages/Home/Home";
 
 function App() {
   return (
