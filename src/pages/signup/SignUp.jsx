@@ -2,10 +2,29 @@ import "./SignUp.css";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ref, object, string, boolean } from "yup";
+import { useState, useEffect } from "react";
 
 import { Button } from "../../component/button/Button";
 
+import { authenticate } from "../../api/authenticate";
+import { getAuth } from "../../api/getAuth";
+
 export const SignUp = () => {
+  const [users, setUsers] = useState([]);
+
+  const initUsers = async () => {
+    const authPromise = await authenticate("tester");
+    const jwt = authPromise.jwt;
+    const usersPromise = await getAuth(jwt);
+    setUsers(usersPromise);
+  };
+
+  useEffect(() => {
+    initUsers();
+  }, []);
+
+  users[0] ? console.log("test test", users[0].id) : console.log("bing");
+
   return (
     <Formik
       initialValues={{

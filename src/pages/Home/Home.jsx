@@ -8,6 +8,8 @@ import { Button } from "../../component/button/Button";
 export const Home = () => {
   const [cookieConfirm, setCookieConfirm] = useState(false);
 
+  // users.length === 0 ? initUsers() : console.log("what");
+
   return cookieConfirm === false ? (
     <Button
       kind="submit"
