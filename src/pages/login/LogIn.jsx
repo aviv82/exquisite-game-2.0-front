@@ -1,8 +1,9 @@
 import "./LogIn.css";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { ref, object, string, boolean } from "yup";
+import { object, string } from "yup";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 import { Button } from "../../component/button/Button";
 
@@ -26,7 +27,11 @@ export const LogIn = () => {
     }
   }, [cookieConfirm]);
 
-  users[0] ? console.log("test login", users[0].id) : console.log("ling");
+  if (users[0]) {
+    console.log("test login", users[0].id);
+  }
+
+  console.log("cookie login test", Cookies.get("id"));
 
   return cookieConfirm === false ? (
     <div className="cookie-confirm">
