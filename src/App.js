@@ -12,6 +12,8 @@ import { handleDelete } from "./handlers/handleDelete";
 import { handleAuth } from "./handlers/handleAuth";
 
 import { Home } from "./pages/Home/Home";
+import { SignUp } from "./pages/signup/SignUp";
+import { LogIn } from "./pages/login/LogIn";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
         <div className="api tests">
           <input type="input" placeholder="value"></input>

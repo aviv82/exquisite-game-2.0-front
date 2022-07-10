@@ -11,6 +11,7 @@ import { getAuth } from "../../api/getAuth";
 
 export const SignUp = () => {
   const [users, setUsers] = useState([]);
+  const [cookieConfirm, setCookieConfirm] = useState(false);
 
   const initUsers = async () => {
     const authPromise = await authenticate("tester");
@@ -20,12 +21,24 @@ export const SignUp = () => {
   };
 
   useEffect(() => {
-    initUsers();
-  }, []);
+    if (cookieConfirm === true) {
+      initUsers();
+    }
+  }, [cookieConfirm]);
 
   users[0] ? console.log("test test", users[0].id) : console.log("bing");
 
-  return (
+  return cookieConfirm === false ? (
+    <div className="cookie-confirm">
+      <h2>confirm cookies</h2>
+      <Button
+        kind="submit"
+        title="confirm cookies"
+        face="green"
+        action={() => setCookieConfirm(true)}
+      ></Button>
+    </div>
+  ) : (
     <Formik
       initialValues={{
         exquisite: "",
@@ -43,7 +56,6 @@ export const SignUp = () => {
         passwordConfirmation: string()
           .oneOf([ref("password"), null], "Passwords must match")
           .required("Required Field"),
-        isWorking: boolean().oneOf([false, true]),
       })}
       onSubmit={(values, onSubmitProps) => {
         console.log("values", values);
