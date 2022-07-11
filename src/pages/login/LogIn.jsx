@@ -9,10 +9,11 @@ import { Button } from "../../component/button/Button";
 
 import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
+import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
+import { handleCookieReject } from "../../handlers/handleCookieReject";
 
 export const LogIn = () => {
   const [users, setUsers] = useState([]);
-  const [cookieConfirm, setCookieConfirm] = useState(false);
 
   const initUsers = async () => {
     const authPromise = await authenticate("tester");
@@ -22,29 +23,38 @@ export const LogIn = () => {
   };
 
   useEffect(() => {
-    if (cookieConfirm === true) {
+    if (Cookies.get("cookieConfirm")) {
       initUsers();
     }
-  }, [cookieConfirm]);
+  }, []);
 
   if (users[0]) {
     console.log("test login", users[0].id);
   }
 
-  console.log("cookie login test", Cookies.get("id"));
+  console.log("cookie login test", Cookies.get("cookieConfirm"));
 
-  return cookieConfirm === false ? (
+  return !Cookies.get("cookieConfirm") ? (
     <div className="cookie-confirm">
       <h2>confirm cookies</h2>
       <Button
         kind="submit"
         title="confirm cookies"
         face="green"
-        action={() => setCookieConfirm(true)}
+        action={handleCookieConfirm}
       ></Button>
     </div>
   ) : (
     <div className="login">
+      <div className="cookie-confirm">
+        <h2>reject cookies</h2>
+        <Button
+          kind="submit"
+          title="reject cookies"
+          face="green"
+          action={handleCookieReject}
+        ></Button>
+      </div>
       <Formik
         initialValues={{
           exquisite: "",
