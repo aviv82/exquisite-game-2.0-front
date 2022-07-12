@@ -16,7 +16,7 @@ export const SignUp = () => {
   const [users, setUsers] = useState([]);
 
   const initUsers = async () => {
-    const authPromise = await authenticate("tester");
+    const authPromise = await authenticate("ghost", "jocKor-qufva5-vinqax");
     const jwt = authPromise.jwt;
     const usersPromise = await getAuth(jwt);
     setUsers(usersPromise);
@@ -29,9 +29,9 @@ export const SignUp = () => {
   }, []);
 
   if (users[0]) {
-    console.log("test signup", users[0].id);
+    console.log("test signup", users);
     Cookies.set("id", users[0].id);
-    console.log("cookie test", Cookies.get("id"));
+    // console.log("cookie test", Cookies.get("id"));
   }
 
   return !Cookies.get("cookieConfirm") ? (

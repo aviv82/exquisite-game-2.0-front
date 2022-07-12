@@ -1,10 +1,10 @@
 import { ORIGIN } from "../config";
 
-export const authenticate = async (value = "") => {
+export const authenticate = async (value = "", pass = "") => {
   const path = "auth/local";
   const body = {
     identifier: value,
-    password: value,
+    password: pass,
   };
   const url = encodeURI(`${ORIGIN}${path}`);
   const response = await fetch(url, {
