@@ -9,11 +9,13 @@ import { Button } from "../../component/button/Button";
 
 import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
+import { post } from "../../api/post";
 import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
 import { handleCookieReject } from "../../handlers/handleCookieReject";
 
 export const SignUp = () => {
   const [users, setUsers] = useState([]);
+  const [warning, setWarning] = useState("");
 
   const initUsers = async () => {
     const authPromise = await authenticate("ghost", "jocKor-qufva5-vinqax");
@@ -30,7 +32,7 @@ export const SignUp = () => {
 
   if (users[0]) {
     console.log("test signup", users);
-    Cookies.set("id", users[0].id);
+    // Cookies.set("id", users[0].id);
     // console.log("cookie test", Cookies.get("id"));
   }
 
@@ -67,19 +69,39 @@ export const SignUp = () => {
           email: string().required("Required Field"),
           password: string()
             .required("Required Field")
-            .min(4, "Password must be longer than four digits")
+            .min(6, "Password must be longer than four digits")
             .max(20, "Password must be shorter than twenty digits"),
           passwordConfirmation: string()
             .oneOf([ref("password"), null], "Passwords must match")
             .required("Required Field"),
         })}
         onSubmit={(values, onSubmitProps) => {
-          console.log("values", values);
+          const toPost = {
+            email: values.email,
+            password: values.password,
+            username: values.exquisite,
+          };
+          console.log("values", values, toPost);
           onSubmitProps.resetForm();
+          for (let i = 0; i < users.length; i++) {
+            if (values.exquisite === users[i].username) {
+              setWarning("Exquisite name is already taken");
+              return;
+            } else if (values.email === users[i].email) {
+              setWarning("Exquisite email is already used");
+              return;
+            }
+          }
+          return new Promise((resolve) => {
+            setWarning("");
+            post("auth/local/register", toPost);
+            resolve();
+          }, 500);
         }}
       >
         {({ values, isSubmitting, errors }) => (
           <Form className="sign-up-form">
+            <span className="warning">{warning}</span>
             <div className="sign-up-name">
               <label htmlFor="exquisite">Exquisite Name:</label>
               <Field

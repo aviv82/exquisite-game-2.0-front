@@ -7,6 +7,7 @@ export const post = async (path, value) => {
   const response = await fetch(url, {
     method: "POST",
     headers: {
+      accept: "application/javascript",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
@@ -15,6 +16,6 @@ export const post = async (path, value) => {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
   const result = await response.json();
-  //  console.log("add", result);
+  console.log("add", result);
   return result;
 };
