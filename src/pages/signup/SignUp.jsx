@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ref, object, string } from "yup";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 import { Button } from "../../component/button/Button";
 
@@ -16,6 +17,7 @@ import { handleCookieReject } from "../../handlers/handleCookieReject";
 export const SignUp = () => {
   const [users, setUsers] = useState([]);
   const [warning, setWarning] = useState("");
+  const [isSignUp, setIsSignUp] = useState("");
 
   const initUsers = async (name, pass) => {
     const authPromise = await authenticate(name, pass);
@@ -48,10 +50,18 @@ export const SignUp = () => {
         action={handleCookieConfirm}
       ></Button>
     </div>
+  ) : isSignUp ? (
+    <div className="congrats">
+      <h2 className="congrats-head">Success!</h2>
+      <p className="congrats-par">Login to play</p>
+      <Link to="/login">
+        <Button kind="submit" title="To Login" face="green"></Button>
+      </Link>
+    </div>
   ) : (
     <div className="signup">
       <div className="cookie-reject">
-        <h2>reject cookies</h2>
+        <h3>reject cookies</h3>
         <Button
           kind="submit"
           title="reject cookies"
@@ -103,7 +113,7 @@ export const SignUp = () => {
           }
           console.log("create user:", values, toPost);
           return new Promise((resolve) => {
-            setWarning("");
+            setIsSignUp(values.exquisite);
             post("auth/local/register", toPost);
             resolve();
           }, 500);
@@ -177,6 +187,9 @@ export const SignUp = () => {
           </Form>
         )}
       </Formik>
+      <a className="signup-link" href="/login">
+        Already Exquisite?
+      </a>
     </div>
   );
 };
