@@ -1,7 +1,7 @@
 import { ORIGIN } from "../config";
 
-export const getAuth = async (value = "") => {
-  const path = "users";
+export const getAuth = async (toGet = "", value = "") => {
+  const path = toGet;
 
   const url = encodeURI(`${ORIGIN}${path}`);
   const response = await fetch(url, {

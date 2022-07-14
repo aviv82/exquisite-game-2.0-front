@@ -17,24 +17,26 @@ export const SignUp = () => {
   const [users, setUsers] = useState([]);
   const [warning, setWarning] = useState("");
 
-  const initUsers = async () => {
-    const authPromise = await authenticate("ghost", "jocKor-qufva5-vinqax");
+  const initUsers = async (name, pass) => {
+    const authPromise = await authenticate(name, pass);
     const jwt = authPromise.jwt;
-    const usersPromise = await getAuth(jwt);
+    const usersPromise = await getAuth("users", jwt);
     setUsers(usersPromise);
   };
 
   useEffect(() => {
     if (Cookies.get("cookieConfirm")) {
-      initUsers();
+      initUsers("ghost", "jocKor-qufva5-vinqax");
     }
   }, []);
 
+  /*
   if (users[0]) {
     console.log("test signup", users);
     // Cookies.set("id", users[0].id);
     // console.log("cookie test", Cookies.get("id"));
   }
+  */
 
   return !Cookies.get("cookieConfirm") ? (
     <div className="cookie-confirm">
@@ -81,17 +83,25 @@ export const SignUp = () => {
             password: values.password,
             username: values.exquisite,
           };
-          console.log("values", values, toPost);
           onSubmitProps.resetForm();
           for (let i = 0; i < users.length; i++) {
-            if (values.exquisite === users[i].username) {
+            if (
+              values.exquisite === users[i].username ||
+              values.exquisite === users[i].email
+            ) {
               setWarning("Exquisite name is already taken");
+              console.log("Exquisite name is already taken");
               return;
-            } else if (values.email === users[i].email) {
-              setWarning("Exquisite email is already used");
+            } else if (
+              values.email === users[i].email ||
+              values.email === users[i].username
+            ) {
+              setWarning("Exquisite email is already used", toPost);
+              console.log("Exquisite email is already used", toPost);
               return;
             }
           }
+          console.log("create user:", values, toPost);
           return new Promise((resolve) => {
             setWarning("");
             post("auth/local/register", toPost);

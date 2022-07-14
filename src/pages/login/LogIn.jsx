@@ -14,25 +14,38 @@ import { handleCookieReject } from "../../handlers/handleCookieReject";
 
 export const LogIn = () => {
   const [users, setUsers] = useState([]);
+  const [toLogin, setToLogin] = useState({});
 
-  const initUsers = async () => {
-    const authPromise = await authenticate("tester");
+  const initUsers = async (name, pass) => {
+    const authPromise = await authenticate(name, pass);
     const jwt = authPromise.jwt;
-    const usersPromise = await getAuth(jwt);
+    const usersPromise = await getAuth("users", jwt);
     setUsers(usersPromise);
+  };
+
+  const loginUser = async (name, pass) => {
+    const authPromise = await authenticate(name, pass);
+    if (authPromise.jwt) {
+      setToLogin(authPromise);
+    } else {
+      setToLogin({});
+    }
+    toLogin.user
+      ? console.log("login user:", toLogin.user.email, toLogin.user.username)
+      : console.log("incorrect password", toLogin, name, pass);
   };
 
   useEffect(() => {
     if (Cookies.get("cookieConfirm")) {
-      initUsers();
+      initUsers("ghost", "jocKor-qufva5-vinqax");
     }
   }, []);
 
   if (users[0]) {
-    console.log("test login", users[0].id);
+    console.log("test login", users);
   }
 
-  console.log("cookie login test", Cookies.get("cookieConfirm"));
+  // console.log("cookie login test", Cookies.get("cookieConfirm"));
 
   return !Cookies.get("cookieConfirm") ? (
     <div className="cookie-confirm">
@@ -64,12 +77,21 @@ export const LogIn = () => {
           exquisite: string().required("Required Field"),
           password: string()
             .required("Required Field")
-            .min(4, "Password must be longer than four digits")
+            .min(6, "Password must be longer than four digits")
             .max(20, "Password must be shorter than twenty digits"),
         })}
         onSubmit={(values, onSubmitProps) => {
-          console.log("values", values);
           onSubmitProps.resetForm();
+          for (let i = 0; i < users.length; i++) {
+            if (
+              values.exquisite === users[i].email ||
+              values.exquisite === users[i].username
+            ) {
+              loginUser(values.exquisite, values.password);
+              return;
+            }
+          }
+          console.log("no such user", values.exquisite);
         }}
       >
         {({ values, isSubmitting, errors }) => (
