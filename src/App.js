@@ -14,6 +14,7 @@ import { handleAuth } from "./handlers/handleAuth";
 import { Home } from "./pages/Home/Home";
 import { SignUp } from "./pages/signup/SignUp";
 import { LogIn } from "./pages/login/LogIn";
+import { Lobby } from "./pages/lobby/Lobby";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/lobby" element={<Lobby />} />
         </Routes>
         <div className="api tests">
           <input type="input" placeholder="value"></input>
