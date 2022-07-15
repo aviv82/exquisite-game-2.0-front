@@ -11,10 +11,13 @@ import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
 import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
 import { handleCookieReject } from "../../handlers/handleCookieReject";
+import { loginAuth } from "../../api/loginAuth";
+import { handleLogout } from "../../handlers/handleLogout";
 
 export const LogIn = () => {
   const [users, setUsers] = useState([]);
-  const [toLogin, setToLogin] = useState({});
+  // const [toLogin, setToLogin] = useState({});
+  const [warning, setWarning] = useState("");
 
   const initUsers = async (name, pass) => {
     const authPromise = await authenticate(name, pass);
@@ -24,26 +27,45 @@ export const LogIn = () => {
   };
 
   const loginUser = async (name, pass) => {
-    const authPromise = await authenticate(name, pass);
+    const authPromise = await loginAuth(name, pass);
     if (authPromise.jwt) {
-      setToLogin(authPromise);
+      Cookies.set("username", authPromise.user.username);
+      Cookies.set("email", authPromise.user.email);
+      Cookies.set("id", authPromise.user.id);
+      Cookies.set("password", pass);
+      Cookies.set("jwt", authPromise.jwt);
+      console.log("login user:", name, pass, authPromise);
+      setWarning("");
+      window.location.reload(false);
+      // setToLogin(authPromise);
     } else {
-      setToLogin({});
+      console.log("incorrect password", name, pass, authPromise);
+      setWarning("Incorrect password");
+      // setToLogin({});
     }
-    toLogin.user
-      ? console.log("login user:", toLogin.user.email, toLogin.user.username)
-      : console.log("incorrect password", toLogin, name, pass);
   };
 
   useEffect(() => {
+    /*
+    console.log(
+      "who's logged in?",
+      Cookies.get("username"),
+      Cookies.get("id"),
+      Cookies.get("email"),
+      Cookies.get("password"),
+      Cookies.get("jwt")
+    );
+    */
     if (Cookies.get("cookieConfirm")) {
       initUsers("ghost", "jocKor-qufva5-vinqax");
     }
   }, []);
 
+  /*
   if (users[0]) {
     console.log("test login", users);
   }
+  */
 
   // console.log("cookie login test", Cookies.get("cookieConfirm"));
 
@@ -55,6 +77,16 @@ export const LogIn = () => {
         title="confirm cookies"
         face="green"
         action={handleCookieConfirm}
+      ></Button>
+    </div>
+  ) : Cookies.get("username") ? (
+    <div className="logout-section">
+      <h2 className="logout-head">Welcome back {Cookies.get("username")}</h2>{" "}
+      <Button
+        kind="submit"
+        title="logout"
+        face="red"
+        action={handleLogout}
       ></Button>
     </div>
   ) : (
@@ -92,10 +124,12 @@ export const LogIn = () => {
             }
           }
           console.log("no such user", values.exquisite);
+          setWarning(`${values.exquisite} is not yet exquisite`);
         }}
       >
         {({ values, isSubmitting, errors }) => (
           <Form className="login-form">
+            <span className="login-warning">{warning}</span>
             <div className="login-name">
               <label htmlFor="exquisite">Exquisite Name:</label>
               <Field

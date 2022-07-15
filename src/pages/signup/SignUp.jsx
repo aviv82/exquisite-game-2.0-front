@@ -50,6 +50,16 @@ export const SignUp = () => {
         action={handleCookieConfirm}
       ></Button>
     </div>
+  ) : Cookies.get("id") ? (
+    <div className="already-login">
+      <h2 className="already-head">
+        Already connected as {Cookies.get("username")}
+      </h2>
+      <p className="already-p">Logout to Sign Up a new Exquisite</p>
+      <Link to="/login">
+        <Button kind="submit" title="To Logout" face="red"></Button>
+      </Link>
+    </div>
   ) : isSignUp ? (
     <div className="congrats">
       <h2 className="congrats-head">Success!</h2>
