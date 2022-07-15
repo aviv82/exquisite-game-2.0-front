@@ -13,6 +13,7 @@ import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
 import { handleCookieReject } from "../../handlers/handleCookieReject";
 import { loginAuth } from "../../api/loginAuth";
 import { handleLogout } from "../../handlers/handleLogout";
+import { Link } from "react-router-dom";
 
 export const LogIn = () => {
   const [users, setUsers] = useState([]);
@@ -81,7 +82,16 @@ export const LogIn = () => {
     </div>
   ) : Cookies.get("username") ? (
     <div className="logout-section">
-      <h2 className="logout-head">Welcome back {Cookies.get("username")}!</h2>{" "}
+      <h2 className="logout-head">Welcome back {Cookies.get("username")}!</h2>
+      <p className="logout-p">Play the exquisite game:</p>
+      <Link to="/lobby">
+        <Button
+          kind="submit"
+          title="To the Exquisite lobby"
+          face="yellow"
+        ></Button>
+      </Link>
+      <p className="logout-p">logout</p>
       <Button
         kind="submit"
         title="logout"

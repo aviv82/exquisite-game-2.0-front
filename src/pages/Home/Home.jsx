@@ -30,6 +30,10 @@ export const Home = () => {
           // action={() => setCookieConfirm(true)}
         ></Button>
       </Link>
+      <p>The Exquisite Lobby</p>
+      <Link to="/lobby">
+        <Button kind="submit" title="Exquisite Lobby" face="pink"></Button>
+      </Link>
     </div>
   );
 };
