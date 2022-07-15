@@ -21,7 +21,7 @@ export const Home = () => {
           // action={() => setCookieConfirm(true)}
         ></Button>
       </Link>
-      <p>Not a Exquisite yet?</p>
+      <p>Not Exquisite yet?</p>
       <Link to="/signup">
         <Button
           kind="submit"

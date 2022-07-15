@@ -81,7 +81,7 @@ export const LogIn = () => {
     </div>
   ) : Cookies.get("username") ? (
     <div className="logout-section">
-      <h2 className="logout-head">Welcome back {Cookies.get("username")}</h2>{" "}
+      <h2 className="logout-head">Welcome back {Cookies.get("username")}!</h2>{" "}
       <Button
         kind="submit"
         title="logout"
