@@ -1,1 +1,8 @@
+.user-list {
+  width: 40%;
+  border: blue 2px solid;
+}
 
+.user-un-list {
+  list-style: none;
+}

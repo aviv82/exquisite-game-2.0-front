@@ -1,7 +1,10 @@
+import "./LobbyUserList.css";
+
 import { useEffect, useRef } from "react";
+import Cookies from "js-cookie";
+
 import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
-import "./LobbyUserList.css";
 
 export const LobbyUserList = () => {
   const users = useRef([]);
@@ -21,10 +24,19 @@ export const LobbyUserList = () => {
     console.log("lobby user list", users.current);
   }
   return (
-    <ul>
-      {users.current.map((user) => (
-        <li key={user.id}>{user.username}</li>
-      ))}
-    </ul>
+    <div className="user-list">
+      <h4 className="user-list-head">Exquisites:</h4>
+      <ul className="user-un-list">
+        {users.current.map((user) =>
+          user.username === Cookies.get("username") ? (
+            <></>
+          ) : (
+            <li key={user.id} className="user-list-item">
+              {user.username}
+            </li>
+          )
+        )}
+      </ul>
+    </div>
   );
 };
