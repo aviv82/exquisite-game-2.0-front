@@ -7,22 +7,12 @@ import { getAuth } from "../../api/getAuth";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/button/Button";
 import { LobbyUserList } from "./LobbyUserList";
+import { LobbyTaleList } from "./LobbyTaleList";
 
 export const Lobby = () => {
-  const [tales, setTales] = useState([]);
-
-  const initTales = async (name, pass) => {
-    const authPromise = await authenticate(name, pass);
-    const jwt = authPromise.jwt;
-    const usersPromise = await getAuth("tales?populate=*", jwt);
-    setTales(usersPromise);
-  };
-
   useEffect(() => {
     Cookies.get("id");
     // initTales("ghost", "jocKor-qufva5-vinqax");
-    console.log("lobby logged in?", Cookies.get("id"));
-    // console.log("lobby tale list", tales);
   }, []);
 
   return !Cookies.get("id") ? (
@@ -40,6 +30,7 @@ export const Lobby = () => {
       <h2 className="lobby-head">
         Welcome to the Exquisite Lobby {Cookies.get("username")}!
       </h2>
+      <LobbyTaleList />
       <LobbyUserList />
     </div>
   );
