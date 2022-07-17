@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../../component/button/Button";
 import { LobbyUserList } from "./LobbyUserList";
 import { LobbyTaleList } from "./LobbyTaleList";
+import { Workspace } from "../workspace/Workspace";
 
 export const Lobby = () => {
   useEffect(() => {
@@ -27,8 +28,11 @@ export const Lobby = () => {
       <h2 className="lobby-head">
         Welcome to the Exquisite Lobby {Cookies.get("username")}!
       </h2>
-      <LobbyTaleList />
-      <LobbyUserList />
+      <div className="lobby-items">
+        <LobbyTaleList />
+        <Workspace />
+        <LobbyUserList />
+      </div>
     </div>
   );
 };

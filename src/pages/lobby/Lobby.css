@@ -1,3 +1,8 @@
 .lobby-head {
   color: blueviolet;
 }
+
+.lobby-items {
+  display: flex;
+  flex-direction: row;
+}
