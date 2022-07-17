@@ -20,9 +20,7 @@ export const SignUp = () => {
   const [isSignUp, setIsSignUp] = useState("");
 
   const initUsers = async (name, pass) => {
-    const authPromise = await authenticate(name, pass);
-    const jwt = authPromise.jwt;
-    const usersPromise = await getAuth("users", jwt);
+    const usersPromise = await getAuth("users", Cookies.get("token"));
     setUsers(usersPromise);
   };
 

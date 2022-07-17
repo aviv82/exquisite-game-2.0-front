@@ -1,9 +1,7 @@
 import "./Lobby.css";
 
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { authenticate } from "../../api/authenticate";
-import { getAuth } from "../../api/getAuth";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/button/Button";
 import { LobbyUserList } from "./LobbyUserList";
@@ -12,7 +10,6 @@ import { LobbyTaleList } from "./LobbyTaleList";
 export const Lobby = () => {
   useEffect(() => {
     Cookies.get("id");
-    // initTales("ghost", "jocKor-qufva5-vinqax");
   }, []);
 
   return !Cookies.get("id") ? (
