@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 
 import { getAuth } from "../../api/getAuth";
+import { Button } from "../../component/button/Button";
 
 export const LobbyTaleList = () => {
   const [tales, setTales] = useState([]);
@@ -20,7 +21,9 @@ export const LobbyTaleList = () => {
     initTales("ghost", "jocKor-qufva5-vinqax");
   }, []);
 
-  console.log("lobby tale list", tales.data);
+  if (tales.data) {
+    console.log("lobby tale list", tales.data);
+  }
 
   return tales.length === 0 ? (
     <h4>Loading</h4>
@@ -46,7 +49,10 @@ export const LobbyTaleList = () => {
         {tales.data.map((tale) =>
           tale.attributes.complete === false &&
           tale.attributes.creators.data[0].attributes.username !==
-            Cookies.get("username") ? (
+            Cookies.get("username") &&
+          tale.attributes.contributor.data.filter(
+            (name) => name.attributes.username === Cookies.get("username")
+          ).length !== 0 ? (
             <li key={tale.id} className="lobby-tale-li">
               {tale.attributes.title}
             </li>
@@ -55,6 +61,24 @@ export const LobbyTaleList = () => {
           )
         )}
       </ul>
+      <h5 className="lobby-tale-sub">other ongoing tales:</h5>
+      <ul className="lobby-tale-un">
+        {tales.data.map((tale) =>
+          tale.attributes.complete === false &&
+          tale.attributes.creators.data[0].attributes.username !==
+            Cookies.get("username") &&
+          tale.attributes.contributor.data.filter(
+            (name) => name.attributes.username === Cookies.get("username")
+          ).length === 0 ? (
+            <li key={tale.id} className="lobby-tale-li">
+              {tale.attributes.title}
+            </li>
+          ) : (
+            <React.Fragment key={tale.id}></React.Fragment>
+          )
+        )}
+      </ul>
+      <Button face="blue" type="submit" title="Create New Tale" />
     </div>
   );
 };
