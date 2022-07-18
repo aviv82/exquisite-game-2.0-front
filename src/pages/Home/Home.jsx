@@ -43,6 +43,10 @@ export const Home = () => {
       <Link to="/lobby">
         <Button kind="submit" title="Exquisite Lobby" face="pink"></Button>
       </Link>
+      <p>The Exquisite Library</p>
+      <Link to="/library">
+        <Button kind="submit" title="Exquisite Library" face="yellow"></Button>
+      </Link>
     </div>
   );
 };
