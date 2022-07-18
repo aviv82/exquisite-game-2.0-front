@@ -44,7 +44,10 @@ export const LibraryTaleList = () => {
               )}
             </h6>
             <p className="library-tale-dark">
-              {tale.attributes.segment[0].body.slice(0, 100)}
+              {tale.attributes.segment[0].body.slice(
+                0,
+                Number(tale.attributes.segment[0].body.length) / 3
+              )}
             </p>
           </div>
         )
