@@ -8,6 +8,8 @@ import { LobbyUserList } from "./LobbyUserList";
 import { LobbyTaleList } from "./LobbyTaleList";
 import { Workspace } from "../workspace/Workspace";
 
+import { useGlobalState, setGlobalState } from "../../global";
+
 export const Lobby = () => {
   useEffect(() => {
     Cookies.get("id");
