@@ -21,7 +21,8 @@ export const LibraryTaleList = () => {
   }, []);
 
   if (tales.data) {
-    console.log("library tale list", tales.data);
+    const text = String(tales.data[0].attributes.segment[0].body);
+    console.log("library tale list", text.slice(0, 40));
   }
   return tales.length === 0 ? (
     <h4 className="library-tale-head">Loading...</h4>
@@ -42,8 +43,8 @@ export const LibraryTaleList = () => {
                   : String(`, ${name.attributes.username}`)
               )}
             </h6>
-            <p className="library-tale-pre">
-              {tale.attributes.segment[0].body}
+            <p className="library-tale-dark">
+              {tale.attributes.segment[0].body.slice(0, 100)}
             </p>
           </div>
         )
