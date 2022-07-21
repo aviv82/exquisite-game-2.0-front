@@ -22,9 +22,11 @@ export const LobbyTaleList = () => {
     initTales("ghost", "jocKor-qufva5-vinqax");
   }, []);
 
+  /*
   if (tales.data) {
     console.log("lobby tale list", tales.data);
   }
+*/
 
   return tales.length === 0 ? (
     <h4>Loading</h4>

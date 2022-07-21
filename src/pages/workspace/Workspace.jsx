@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { Button } from "../../component/button/Button";
 import "./Workspace.css";
+import { WorkSpaceIntro } from "./WorkSpaceIntro";
 
 export const Workspace = () => {
   const handleClearMode = () => {
@@ -10,11 +11,7 @@ export const Workspace = () => {
 
   return (
     <div className="workspace">
-      {Cookies.get("mode") === "new" ? (
-        <h2>new!</h2>
-      ) : (
-        <h2 className="test-head">Exquisite Workspace</h2>
-      )}
+      {Cookies.get("mode") === "new" ? <h2>new!</h2> : <WorkSpaceIntro />}
       <Button
         title="reset mode cookie"
         kind="submit"
