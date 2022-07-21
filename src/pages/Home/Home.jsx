@@ -1,9 +1,8 @@
 import "./Home.css";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { SignUp } from "../signup/SignUp";
 import { Button } from "../../component/button/Button";
 import { authenticate } from "../../api/authenticate";
 import Cookies from "js-cookie";

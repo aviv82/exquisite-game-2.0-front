@@ -3,12 +3,12 @@ import "./Lobby.css";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import { Button } from "../../component/button/Button";
+
 import { LobbyUserList } from "./LobbyUserList";
 import { LobbyTaleList } from "./LobbyTaleList";
 import { Workspace } from "../workspace/Workspace";
-
-import { useGlobalState, setGlobalState } from "../../global";
 
 export const Lobby = () => {
   useEffect(() => {

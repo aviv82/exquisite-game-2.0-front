@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 
 import { getAuth } from "../../api/getAuth";
 import { Button } from "../../component/button/Button";
+import { handleCreateNewTale } from "../../handlers/handleCreateNewTale";
 
 export const LobbyTaleList = () => {
   const [tales, setTales] = useState([]);
@@ -78,7 +79,12 @@ export const LobbyTaleList = () => {
           )
         )}
       </ul>
-      <Button face="blue" type="submit" title="Create New Tale" />
+      <Button
+        face="blue"
+        type="submit"
+        title="Create New Tale"
+        action={handleCreateNewTale}
+      />
     </div>
   );
 };
