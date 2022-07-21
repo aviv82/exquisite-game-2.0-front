@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 
 import { Button } from "../../component/button/Button";
 
-import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
 import { post } from "../../api/post";
 import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
@@ -139,7 +138,7 @@ export const SignUp = () => {
               ></Field>
               <ErrorMessage
                 component="div"
-                className="error"
+                className="signup-error"
                 name="exquisite"
               ></ErrorMessage>
             </div>
@@ -152,7 +151,7 @@ export const SignUp = () => {
               ></Field>
               <ErrorMessage
                 component="div"
-                className="error"
+                className="signup-error"
                 name="email"
               ></ErrorMessage>
             </div>
@@ -165,7 +164,7 @@ export const SignUp = () => {
               ></Field>
               <ErrorMessage
                 component="div"
-                className="error"
+                className="signup-error"
                 name="password"
               ></ErrorMessage>
             </div>
@@ -178,7 +177,7 @@ export const SignUp = () => {
               ></Field>
               <ErrorMessage
                 component="div"
-                className="error"
+                className="signup-error"
                 name="passwordConfirmation"
               ></ErrorMessage>
             </div>
