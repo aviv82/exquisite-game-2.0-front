@@ -17,9 +17,11 @@ export const LobbyUserList = () => {
     initUsers("ghost", "jocKor-qufva5-vinqax");
   }, []);
 
+  /*
   if (users) {
     console.log("lobby user list", users);
   }
+  */
 
   return users.length === 0 ? (
     <h3>Loading...</h3>

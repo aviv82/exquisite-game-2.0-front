@@ -22,11 +22,12 @@ export const LobbyTaleList = () => {
     initTales("ghost", "jocKor-qufva5-vinqax");
   }, []);
 
-  /*
   if (tales.data) {
-    console.log("lobby tale list", tales.data);
+    // const titles = [];
+    // tales.data.map((tale) => titles.push(tale.attributes.title));
+    // Cookies.set("tales", titles);
+    console.log("lobby tales:", tales);
   }
-*/
 
   return tales.length === 0 ? (
     <h4>Loading</h4>
