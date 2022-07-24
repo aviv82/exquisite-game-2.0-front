@@ -12,7 +12,7 @@ export const Workspace = ({ tales }) => {
     // const titles = [];
     // tales.data.map((tale) => titles.push(tale.attributes.title));
     // Cookies.set("tales", titles);
-    console.log("lobby tales:", tales);
+    // console.log("lobby tales:", tales);
   }
 
   const handleClearMode = () => {
@@ -25,7 +25,7 @@ export const Workspace = ({ tales }) => {
       {Cookies.get("mode") === "new" ? (
         <WorkspaceNewTale tales={tales} />
       ) : Cookies.get("mode") === "ongoing" ? (
-        <WorkspaceOngoingTale num={Cookies.get("tale")} />
+        <WorkspaceOngoingTale num={Cookies.get("tale")} tales={tales.data} />
       ) : (
         <WorkspaceIntro />
       )}

@@ -27,12 +27,14 @@ export const Lobby = () => {
     Cookies.get("id");
   }, []);
 
+  /*
   if (tales.data) {
     // const titles = [];
     // tales.data.map((tale) => titles.push(tale.attributes.title));
     // Cookies.set("tales", titles);
-    console.log("lobby tales:", tales);
+    // console.log("lobby tales:", tales);
   }
+*/
 
   return !Cookies.get("id") ? (
     <div className="lobby">
