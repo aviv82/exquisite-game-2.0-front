@@ -49,23 +49,23 @@ export const WorkspaceNewTale = () => {
             console.log("already exists", values.title);
             setWarning("A tale with the same title already exists");
           } else {
-            // const postId = Number(Cookies.get("id"));
+            const postId = Number(Cookies.get("id"));
             const toPost = {
               data: {
                 title: values.title,
-                // creators: [{ id: postId }],
+                creators: { id: postId },
                 segment: [
                   {
                     body: values.first,
-                    // writer: { data: { id: 2 } },
+                    writer: { id: postId },
                   },
                 ],
               },
             };
-            postAuth("tales", toPost, Cookies.get("jwt"));
-            // Cookies.set("mode", "blank");
+            postAuth("tales", toPost, Cookies.get("token"));
+            Cookies.set("mode", "blank");
             console.log("new title", values.title);
-            // window.location.reload(false);
+            window.location.reload(false);
           }
           console.log("values", values, titles, verifier);
         }}
