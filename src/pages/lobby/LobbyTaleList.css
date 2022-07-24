@@ -3,6 +3,7 @@
 }
 
 .lobby-tale-list {
+  cursor: pointer;
   width: 30%;
   border: rebeccapurple 2px solid;
 }

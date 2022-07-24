@@ -10,21 +10,8 @@ import { Button } from "../../component/button/Button";
 import { getAuth } from "../../api/getAuth";
 import { postAuth } from "../../api/postAuth";
 
-export const WorkspaceNewTale = () => {
-  const [tales, setTales] = useState([]);
+export const WorkspaceNewTale = ({ tales }) => {
   const [warning, setWarning] = useState("");
-
-  const initTales = async (name, pass) => {
-    const usersPromise = await getAuth(
-      "tales?populate=*",
-      Cookies.get("token")
-    );
-    setTales(usersPromise);
-  };
-
-  useEffect(() => {
-    initTales("ghost", "jocKor-qufva5-vinqax");
-  }, []);
 
   return (
     <div className="new-tale-wrap">

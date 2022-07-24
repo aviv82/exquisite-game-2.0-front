@@ -1,7 +1,7 @@
 import "./Lobby.css";
 
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "../../component/button/Button";
@@ -9,11 +9,30 @@ import { Button } from "../../component/button/Button";
 import { LobbyUserList } from "./LobbyUserList";
 import { LobbyTaleList } from "./LobbyTaleList";
 import { Workspace } from "../workspace/Workspace";
+import { getAuth } from "../../api/getAuth";
 
 export const Lobby = () => {
+  const [tales, setTales] = useState([]);
+
+  const initTales = async (name, pass) => {
+    const usersPromise = await getAuth(
+      "tales?populate=*",
+      Cookies.get("token")
+    );
+    setTales(usersPromise);
+  };
+
   useEffect(() => {
+    initTales("ghost", "jocKor-qufva5-vinqax");
     Cookies.get("id");
   }, []);
+
+  if (tales.data) {
+    // const titles = [];
+    // tales.data.map((tale) => titles.push(tale.attributes.title));
+    // Cookies.set("tales", titles);
+    console.log("lobby tales:", tales);
+  }
 
   return !Cookies.get("id") ? (
     <div className="lobby">
@@ -31,8 +50,8 @@ export const Lobby = () => {
         Welcome to the Exquisite Lobby {Cookies.get("username")}!
       </h2>
       <div className="lobby-items">
-        <LobbyTaleList />
-        <Workspace />
+        <LobbyTaleList tales={tales} />
+        <Workspace tales={tales} />
         <LobbyUserList />
       </div>
     </div>

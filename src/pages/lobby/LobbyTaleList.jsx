@@ -1,34 +1,14 @@
 import "./LobbyTaleList.css";
 
 import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { getAuth } from "../../api/getAuth";
+// import { getAuth } from "../../api/getAuth";
 import { Button } from "../../component/button/Button";
 import { handleCreateNewTale } from "../../handlers/handleCreateNewTale";
+import { handleOngoingTale } from "../../handlers/handleOngoingTale";
 
-export const LobbyTaleList = () => {
-  const [tales, setTales] = useState([]);
-
-  const initTales = async (name, pass) => {
-    const usersPromise = await getAuth(
-      "tales?populate=*",
-      Cookies.get("token")
-    );
-    setTales(usersPromise);
-  };
-
-  useEffect(() => {
-    initTales("ghost", "jocKor-qufva5-vinqax");
-  }, []);
-
-  if (tales.data) {
-    // const titles = [];
-    // tales.data.map((tale) => titles.push(tale.attributes.title));
-    // Cookies.set("tales", titles);
-    console.log("lobby tales:", tales);
-  }
-
+export const LobbyTaleList = ({ tales }) => {
   return tales.length === 0 ? (
     <h4>Loading</h4>
   ) : (
@@ -40,7 +20,12 @@ export const LobbyTaleList = () => {
           tale.attributes.complete === false &&
           tale.attributes.creators.data[0].attributes.username ===
             Cookies.get("username") ? (
-            <li key={tale.id} className="lobby-tale-li">
+            <li
+              key={tale.id}
+              id={tale.id}
+              onClick={handleOngoingTale}
+              className="lobby-tale-li"
+            >
               {tale.attributes.title}
             </li>
           ) : (
@@ -57,7 +42,12 @@ export const LobbyTaleList = () => {
           tale.attributes.contributor.data.filter(
             (name) => name.attributes.username === Cookies.get("username")
           ).length !== 0 ? (
-            <li key={tale.id} className="lobby-tale-li">
+            <li
+              id={tale.id}
+              key={tale.id}
+              onClick={handleOngoingTale}
+              className="lobby-tale-li"
+            >
               {tale.attributes.title}
             </li>
           ) : (
@@ -74,7 +64,12 @@ export const LobbyTaleList = () => {
           tale.attributes.contributor.data.filter(
             (name) => name.attributes.username === Cookies.get("username")
           ).length === 0 ? (
-            <li key={tale.id} className="lobby-tale-li">
+            <li
+              key={tale.id}
+              id={tale.id}
+              onClick={handleOngoingTale}
+              className="lobby-tale-li"
+            >
               {tale.attributes.title}
             </li>
           ) : (

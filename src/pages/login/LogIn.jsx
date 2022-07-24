@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 import { Button } from "../../component/button/Button";
 
-import { authenticate } from "../../api/authenticate";
+// import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
 import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
 import { handleCookieReject } from "../../handlers/handleCookieReject";
