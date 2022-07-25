@@ -3,11 +3,11 @@ import "./WorkspaceNewTale.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string } from "yup";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "../../component/button/Button";
 
-import { getAuth } from "../../api/getAuth";
+// import { getAuth } from "../../api/getAuth";
 import { postAuth } from "../../api/postAuth";
 
 export const WorkspaceNewTale = ({ tales }) => {
