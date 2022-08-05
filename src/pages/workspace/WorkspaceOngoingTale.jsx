@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string } from "yup";
 
 import { getAuth } from "../../api/getAuth";
+import { putAuth } from "../../api/putAuth";
 import { Button } from "../../component/button/Button";
 
 export const WorkspaceOngoingTale = ({ num }) => {
@@ -29,14 +30,21 @@ export const WorkspaceOngoingTale = ({ num }) => {
     Cookies.get("id");
   }, []);
 
-  /*
+  const taleSegments = [];
+
   if (tales) {
-    console.log("ongoing", tales);
+    tales.map((tale) =>
+      tale.id === Number(num)
+        ? tale.attributes.segment.map((seg) =>
+            taleSegments.push({ id: seg.id })
+          )
+        : null
+    );
+    console.log("ongoing", tales, taleSegments);
   }
-*/
 
   const taleToShow = [];
-  if (tales) {
+  if (tales.length !== 0) {
     tales.map((tale) =>
       tale.id === Number(num) ? taleToShow.push(tale) : null
     );
@@ -85,6 +93,25 @@ export const WorkspaceOngoingTale = ({ num }) => {
                 "New segment must be at least one hundred characters long"
               );
             }
+            const authorId = Number(Cookies.get("id"));
+            const talePath = `tales/${Number(num)}`;
+            const newSeg = {
+              body: values.segment,
+              writer: { id: authorId },
+            };
+            taleSegments.push(newSeg);
+            console.log("newSeg", taleSegments);
+            const toPost = {
+              data: {
+                contributor: [
+                  {
+                    id: authorId,
+                  },
+                ],
+                segment: taleSegments,
+              },
+            };
+            putAuth(talePath, toPost, Cookies.get("token"));
             console.log("new segment;", values);
           }}
         >
