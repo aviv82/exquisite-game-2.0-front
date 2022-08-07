@@ -19,7 +19,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
 
   const initTales = async (name, pass) => {
     const usersPromise = await getAuth(
-      "tales?populate[segment][populate]=writer",
+      "tales?populate[0]=contributor&populate[1]=creators&populate[2]=segment.writer",
       Cookies.get("token")
     );
     setTales(usersPromise.data);
@@ -31,8 +31,10 @@ export const WorkspaceOngoingTale = ({ num }) => {
   }, []);
 
   const taleSegments = [];
+  let taleAuthor = "";
+  const taleContributorIds = [];
 
-  if (tales) {
+  if (tales.length !== 0) {
     tales.map((tale) =>
       tale.id === Number(num)
         ? tale.attributes.segment.map((seg) =>
@@ -40,8 +42,30 @@ export const WorkspaceOngoingTale = ({ num }) => {
           )
         : null
     );
-    console.log("ongoing", tales, taleSegments);
+
+    tales.map((tale) =>
+      tale.id === Number(num)
+        ? (taleAuthor = tale.attributes.creators.data[0].id)
+        : null
+    );
+
+    const taleContributors = [];
+    tales.map((tale) =>
+      tale.id === Number(num)
+        ? taleContributors.push(tale.attributes.contributor.data)
+        : null
+    );
+    // console.log("contributors", taleContributors[0][0].id);
+
+    taleContributors[0].map((contributor) =>
+      taleContributorIds.push({ id: contributor.id })
+    );
   }
+
+  console.log("ongoing", tales);
+  console.log("tale segments", taleSegments);
+  console.log("tale author", taleAuthor);
+  console.log("contributor ids", taleContributorIds);
 
   const taleToShow = [];
   if (tales.length !== 0) {
@@ -94,6 +118,15 @@ export const WorkspaceOngoingTale = ({ num }) => {
               );
             }
             const authorId = Number(Cookies.get("id"));
+
+            if (
+              !taleContributorIds.includes(authorId) &&
+              authorId !== taleAuthor
+            ) {
+              taleContributorIds.push({ id: authorId });
+            }
+            console.log("tale contributors", taleContributorIds);
+
             const talePath = `tales/${Number(num)}`;
             const newSeg = {
               body: values.segment,
@@ -103,11 +136,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
             console.log("newSeg", taleSegments);
             const toPost = {
               data: {
-                contributor: [
-                  {
-                    id: authorId,
-                  },
-                ],
+                contributor: taleContributorIds,
                 segment: taleSegments,
               },
             };
