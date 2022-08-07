@@ -20,7 +20,10 @@ export const WorkspaceNewTale = ({ tales }) => {
         initialValues={{ title: "", first: "" }}
         validationSchema={object({
           title: string().required("Required Field"),
-          first: string().required("Required Field"),
+          first: string()
+            .required("Required Field")
+            .min(80, "tale segment must be at least 100 characters long")
+            .max(240, "tale segment must be shorter than 300 characters"),
         })}
         onSubmit={(values, onSubmitProps) => {
           onSubmitProps.resetForm();

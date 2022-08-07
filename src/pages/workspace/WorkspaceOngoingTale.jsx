@@ -11,7 +11,7 @@ import { Button } from "../../component/button/Button";
 
 export const WorkspaceOngoingTale = ({ num }) => {
   const [tales, setTales] = useState([]);
-  const [warning, setWarning] = useState("");
+  // const [warning, setWarning] = useState("");
 
   const title = useRef("");
   const body = useRef("");
@@ -108,15 +108,20 @@ export const WorkspaceOngoingTale = ({ num }) => {
         <Formik
           initialValues={{ segment: "" }}
           validationSchema={object({
-            segment: string().required("Required Field"),
+            segment: string()
+              .required("Required Field")
+              .min(80, "tale segment must be at least 80 characters long")
+              .max(240, "tale segment must be shorter than 240 characters"),
           })}
           onSubmit={(values, onSubmitProps) => {
             onSubmitProps.resetForm();
+            /*
             if (values.segment.length < 100) {
               setWarning(
                 "New segment must be at least one hundred characters long"
               );
             }
+            */
             const authorId = Number(Cookies.get("id"));
 
             if (
@@ -146,7 +151,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
         >
           {({ values, errors, isSubmitting }) => (
             <Form className="new-segment-form">
-              <span className="new-segment-warning">{warning}</span>
+              {/* <span className="new-segment-warning">{warning}</span> */}
               <div className="new-segment">
                 <label htmlFor="segment">Add New Segment:</label>
                 <Field
