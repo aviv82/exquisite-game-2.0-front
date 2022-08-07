@@ -9,6 +9,7 @@ import { Button } from "../../component/button/Button";
 
 // import { getAuth } from "../../api/getAuth";
 import { postAuth } from "../../api/postAuth";
+import { pageReload } from "../../handlers/pageReload";
 
 export const WorkspaceNewTale = ({ tales }) => {
   const [warning, setWarning] = useState("");
@@ -19,11 +20,14 @@ export const WorkspaceNewTale = ({ tales }) => {
       <Formik
         initialValues={{ title: "", first: "" }}
         validationSchema={object({
-          title: string().required("Required Field"),
+          title: string()
+            .required("Required Field")
+            .min(2, "tale title must be at least 2 characters long")
+            .max(40, "tale title cannot be longer than 40 characters"),
           first: string()
             .required("Required Field")
-            .min(80, "tale segment must be at least 100 characters long")
-            .max(240, "tale segment must be shorter than 300 characters"),
+            .min(80, "tale segment must be at least 80 characters long")
+            .max(300, "tale segment must be shorter than 300 characters"),
         })}
         onSubmit={(values, onSubmitProps) => {
           onSubmitProps.resetForm();
@@ -55,7 +59,7 @@ export const WorkspaceNewTale = ({ tales }) => {
             postAuth("tales", toPost, Cookies.get("token"));
             Cookies.set("mode", "blank");
             console.log("new title", values.title);
-            window.location.reload(false);
+            setTimeout(pageReload, 800);
           }
           console.log("values", values, titles, verifier);
         }}

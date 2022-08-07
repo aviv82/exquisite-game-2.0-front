@@ -1,13 +1,16 @@
 import "./WorkspaceOngoingTale.css";
 
 import Cookies from "js-cookie";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string } from "yup";
 
+import { Button } from "../../component/button/Button";
+
 import { getAuth } from "../../api/getAuth";
 import { putAuth } from "../../api/putAuth";
-import { Button } from "../../component/button/Button";
+import { pageReload } from "../../handlers/pageReload";
+import { handleFinishTale } from "../../handlers/handleFinishTale";
 
 export const WorkspaceOngoingTale = ({ num }) => {
   const [tales, setTales] = useState([]);
@@ -62,10 +65,12 @@ export const WorkspaceOngoingTale = ({ num }) => {
     );
   }
 
+  /*
   console.log("ongoing", tales);
   console.log("tale segments", taleSegments);
   console.log("tale author", taleAuthor);
   console.log("contributor ids", taleContributorIds);
+  */
 
   const taleToShow = [];
   if (tales.length !== 0) {
@@ -85,7 +90,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
       taleToShow[0].attributes.segment[
         taleToShow[0].attributes.segment.length - 1
       ].writer.data.id;
-    console.log("writer:", writer.current);
+    // console.log("writer:", writer.current);
   }
 
   return tales.length === 0 ? (
@@ -96,6 +101,16 @@ export const WorkspaceOngoingTale = ({ num }) => {
       <h3 className="ongoing-subhead">
         The last segment added to this tale was written by you
       </h3>
+      {taleAuthor === Number(Cookies.get("id")) ? (
+        <Button
+          title="finish tale"
+          kind="submit"
+          face="green"
+          action={() => handleFinishTale(num, Cookies.get("token"))}
+        />
+      ) : (
+        <React.Fragment></React.Fragment>
+      )}
     </div>
   ) : (
     <div className="ongoing-tale">
@@ -111,7 +126,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
             segment: string()
               .required("Required Field")
               .min(80, "tale segment must be at least 80 characters long")
-              .max(240, "tale segment must be shorter than 240 characters"),
+              .max(300, "tale segment must be shorter than 300 characters"),
           })}
           onSubmit={(values, onSubmitProps) => {
             onSubmitProps.resetForm();
@@ -130,7 +145,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
             ) {
               taleContributorIds.push({ id: authorId });
             }
-            console.log("tale contributors", taleContributorIds);
+            // console.log("tale contributors", taleContributorIds);
 
             const talePath = `tales/${Number(num)}`;
             const newSeg = {
@@ -147,6 +162,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
             };
             putAuth(talePath, toPost, Cookies.get("token"));
             console.log("new segment;", values);
+            setTimeout(pageReload, 800);
           }}
         >
           {({ values, errors, isSubmitting }) => (
@@ -178,6 +194,16 @@ export const WorkspaceOngoingTale = ({ num }) => {
           )}
         </Formik>
       </div>
+      {taleAuthor === Number(Cookies.get("id")) ? (
+        <Button
+          title="finish tale"
+          kind="submit"
+          face="green"
+          action={() => handleFinishTale(num, Cookies.get("token"))}
+        />
+      ) : (
+        <React.Fragment></React.Fragment>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { getAuth } from "../../api/getAuth";
+// import { useEffect, useState } from "react";
+// import { getAuth } from "../../api/getAuth";
 import { Button } from "../../component/button/Button";
 import "./Workspace.css";
 import { WorkspaceIntro } from "./WorkspaceIntro";
