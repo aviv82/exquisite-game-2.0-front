@@ -1,10 +1,9 @@
-.library-head {
-  color: rgb(245, 139, 10);
+.library-search-head {
+  color: chartreuse;
 }
 
-/* 
-.library-sub-wrap {
+.library-sub {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-} */
+}

@@ -1,29 +1,15 @@
 import "./LibraryTaleList.css";
 
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import React from "react";
 
-import { getAuth } from "../../api/getAuth";
-
-export const LibraryTaleList = () => {
-  const [tales, setTales] = useState([]);
-
-  const initTales = async (name, pass) => {
-    const usersPromise = await getAuth(
-      "tales?populate=*",
-      Cookies.get("token")
-    );
-    setTales(usersPromise);
-  };
-
-  useEffect(() => {
-    initTales("ghost", "jocKor-qufva5-vinqax");
-  }, []);
-
+export const LibraryTaleList = ({ tales }) => {
+  /*
   if (tales.data) {
     const text = String(tales.data[0].attributes.segment[0].body);
-    console.log("library tale list", text.slice(0, 40));
+    // console.log("library tale list", text.slice(0, 40));
   }
+*/
+
   return tales.length === 0 ? (
     <h4 className="library-tale-head">Loading...</h4>
   ) : (
