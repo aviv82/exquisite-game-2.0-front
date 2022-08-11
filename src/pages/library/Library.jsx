@@ -25,7 +25,7 @@ export const Library = () => {
     <div className="library-wrap">
       <h3 className="library-head">The Exquisite Library</h3>
       <LibrarySearch tales={tales.data} />
-      <LibraryTaleList tales={tales} />
+      <LibraryTaleList tales={tales.data} />
     </div>
   );
 };

@@ -9,13 +9,14 @@ export const LibraryTaleList = ({ tales }) => {
     // console.log("library tale list", text.slice(0, 40));
   }
 */
+  // console.log("test tales", tales);
 
-  return tales.length === 0 ? (
+  return tales === undefined ? (
     <h4 className="library-tale-head">Loading...</h4>
   ) : (
     <div className="library-tale-list">
       <h4 className="library-tale-head">Tale list:</h4>
-      {tales.data.map((tale) =>
+      {tales.map((tale) =>
         tale.attributes.complete === false ? (
           <React.Fragment key={tale.id}></React.Fragment>
         ) : (

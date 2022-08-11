@@ -2,8 +2,18 @@
   color: chartreuse;
 }
 
-.library-sub {
+.library-search-section {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.library-search-field {
+  width: 20%;
+  padding: 10px;
+  border: red solid 2px;
+}
+
+.library-input-preview li {
+  list-style: none;
 }
