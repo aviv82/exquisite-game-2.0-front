@@ -4,7 +4,7 @@ import { getAuth } from "../../api/getAuth";
 import "./Library.css";
 
 import { LibrarySearch } from "./LibrarySearch";
-import { LibraryTaleList } from "./LibraryTaleList";
+// import { LibraryTaleList } from "./LibraryTaleList";
 
 export const Library = () => {
   const [tales, setTales] = useState([]);
@@ -25,7 +25,7 @@ export const Library = () => {
     <div className="library-wrap">
       <h3 className="library-head">The Exquisite Library</h3>
       <LibrarySearch tales={tales.data} />
-      <LibraryTaleList tales={tales.data} />
+      {/* <LibraryTaleList tales={tales.data} /> */}
     </div>
   );
 };

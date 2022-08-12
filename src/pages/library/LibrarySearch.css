@@ -17,3 +17,9 @@
 .library-input-preview li {
   list-style: none;
 }
+
+.library-display {
+  width: 60%;
+  padding: 10px;
+  border: purple solid 2px;
+}

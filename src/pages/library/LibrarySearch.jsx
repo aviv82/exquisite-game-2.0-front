@@ -1,11 +1,62 @@
 import "./LibrarySearch.css";
 
 import React, { useState } from "react";
-
-// import { Button } from "../../component/button/Button";
+import { LibraryTaleList } from "./LibraryTaleList";
 
 export const LibrarySearch = ({ tales }) => {
   const [searchTale, setSearchTale] = useState("");
+  const [toDisplay, setToDisplay] = useState([]);
+
+  const handleTaleSearch = (type, value) => {
+    if (type === "all") {
+      setSearchTale(value);
+      if (tales !== undefined) {
+        setToDisplay(
+          tales.filter(
+            (tale) =>
+              (tale.attributes.complete === true &&
+                tale.attributes.title.includes(value)) ||
+              (tale.attributes.complete === true &&
+                tale.attributes.creators.data[0].attributes.username.includes(
+                  value
+                )) ||
+              (tale.attributes.complete === true &&
+                tale.attributes.contributor.data.filter((name) =>
+                  name.attributes.username.includes(value)
+                ).length !== 0)
+          )
+        );
+      }
+    } else if (type === "title") {
+      setToDisplay(
+        tales.filter(
+          (tale) =>
+            tale.attributes.complete === true && tale.attributes.title === value
+        )
+      );
+      setSearchTale("");
+    } else if (type === "author") {
+      setToDisplay(
+        tales.filter(
+          (tale) =>
+            tale.attributes.complete === true &&
+            tale.attributes.creators.data[0].attributes.username === value
+        )
+      );
+      setSearchTale("");
+    } else if (type === "contributor") {
+      setToDisplay(
+        tales.filter(
+          (tale) =>
+            tale.attributes.complete === true &&
+            tale.attributes.contributor.data.filter(
+              (name) => name.attributes.username === value
+            ).length !== 0
+        )
+      );
+      setSearchTale("");
+    }
+  };
 
   const authors = [];
   const contributors = [];
@@ -46,7 +97,7 @@ export const LibrarySearch = ({ tales }) => {
             placeholder="Search Tales"
             value={searchTale}
             onChange={(e) => {
-              setSearchTale(e.target.value);
+              handleTaleSearch("all", e.target.value);
             }}
           ></input>
           <div className="library-input-preview">
@@ -56,7 +107,14 @@ export const LibrarySearch = ({ tales }) => {
                 searchTale.length !== 0 ? (
                   tale.attributes.complete === true &&
                   tale.attributes.title.includes(searchTale) ? (
-                    <li key={tale.id}>{tale.attributes.title}</li>
+                    <li
+                      key={tale.id}
+                      onClick={() =>
+                        handleTaleSearch("title", tale.attributes.title)
+                      }
+                    >
+                      {tale.attributes.title}
+                    </li>
                   ) : (
                     <React.Fragment key={tale.id}></React.Fragment>
                   )
@@ -77,7 +135,9 @@ export const LibrarySearch = ({ tales }) => {
                   : null
               )}
               {authors.map((name, i) => (
-                <li key={i}>{name}</li>
+                <li key={i} onClick={() => handleTaleSearch("author", name)}>
+                  {name}
+                </li>
               ))}
               {searchTale.length !== 0 ? <h5>Contributor</h5> : null}
               {searchTale.length !== 0
@@ -91,12 +151,24 @@ export const LibrarySearch = ({ tales }) => {
                   )
                 : null}
               {contributors.map((name, i) => (
-                <li key={i}>{name}</li>
+                <li
+                  key={i}
+                  onClick={() => handleTaleSearch("contributor", name)}
+                >
+                  {name}
+                </li>
               ))}
             </ul>
           </div>
         </div>
-        <h4>Display Field</h4>
+        <div className="library-display">
+          <h4>Display Field</h4>
+          {toDisplay.length === 0 && searchTale === "" ? (
+            <LibraryTaleList tales={tales} />
+          ) : (
+            <LibraryTaleList tales={toDisplay} />
+          )}
+        </div>
       </div>
     </div>
   );
