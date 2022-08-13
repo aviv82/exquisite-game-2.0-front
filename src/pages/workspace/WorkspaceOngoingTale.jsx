@@ -19,6 +19,7 @@ export const WorkspaceOngoingTale = ({ num }) => {
   const title = useRef("");
   const body = useRef("");
   const writer = useRef(0);
+  const segmentNumber = useRef(0);
 
   const initTales = async (name, pass) => {
     const usersPromise = await getAuth(
@@ -45,6 +46,14 @@ export const WorkspaceOngoingTale = ({ num }) => {
           )
         : null
     );
+
+    if (tales.length !== 0) {
+      tales.map((tale) =>
+        tale.id === Number(num)
+          ? (segmentNumber.current = tale.attributes.segment.length)
+          : null
+      );
+    }
 
     tales.map((tale) =>
       tale.id === Number(num)
@@ -97,7 +106,10 @@ export const WorkspaceOngoingTale = ({ num }) => {
     <h2 className="ongoing-head">Loading...</h2>
   ) : writer.current === Number(Cookies.get("id")) ? (
     <div className="ongoing-tale">
-      <h2 className="ongoing-head">Ongoing tale - {title.current}</h2>{" "}
+      <h2 className="ongoing-head">Ongoing tale - {title.current}</h2>
+      <h4 className="ongoing-segment-number">
+        Segments: {segmentNumber.current}
+      </h4>
       <h3 className="ongoing-subhead">
         The last segment added to this tale was written by you
       </h3>
@@ -115,6 +127,9 @@ export const WorkspaceOngoingTale = ({ num }) => {
   ) : (
     <div className="ongoing-tale">
       <h2 className="ongoing-head">Ongoing tale - {title.current}</h2>
+      <h4 className="ongoing-segment-number">
+        Segments: {segmentNumber.current}
+      </h4>
       <h3 className="ongoing-subhead">Previous segment:</h3>
       <p className="ongoing-p">
         {body.current.slice(body.current.length * (2 / 3))}

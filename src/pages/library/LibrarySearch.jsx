@@ -87,10 +87,9 @@ export const LibrarySearch = ({ tales }) => {
     <h2>Loading...</h2>
   ) : (
     <div className="library-search-wrap">
-      <h3 className="library-search-head">Search Tales</h3>
       <div className="library-search-section">
         <div className="library-search-field">
-          <h4>Search Field</h4>
+          <h4>Browse Tales</h4>
           <input
             type="input"
             className="library-input-field"
@@ -162,7 +161,6 @@ export const LibrarySearch = ({ tales }) => {
           </div>
         </div>
         <div className="library-display">
-          <h4>Display Field</h4>
           {toDisplay.length === 0 && searchTale === "" ? (
             <LibraryTaleList tales={tales} />
           ) : (

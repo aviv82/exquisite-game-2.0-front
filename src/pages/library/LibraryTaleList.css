@@ -1,3 +1,8 @@
 .library-tale-head {
   color: rgb(226, 43, 208);
 }
+
+.library-tale-item {
+  border: rgb(178, 130, 173) 2px solid;
+  cursor: pointer;
+}
