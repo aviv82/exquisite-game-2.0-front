@@ -16,6 +16,7 @@ import { SignUp } from "./pages/signup/SignUp";
 import { LogIn } from "./pages/login/LogIn";
 import { Lobby } from "./pages/lobby/Lobby";
 import { Library } from "./pages/library/Library";
+import { Tale } from "./pages/tale/Tale";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/lobby" element={<Lobby />} />
           <Route path="/library" element={<Library />} />
+          <Route path="/tale" element={<Tale />} />
         </Routes>
         <div className="api tests">
           <input type="input" placeholder="value"></input>
