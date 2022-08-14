@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 
 import { Button } from "../../component/button/Button";
 
-// import { authenticate } from "../../api/authenticate";
 import { getAuth } from "../../api/getAuth";
 import { handleCookieConfirm } from "../../handlers/handleCookieConfirm";
 import { handleCookieReject } from "../../handlers/handleCookieReject";
@@ -17,7 +16,6 @@ import { Link } from "react-router-dom";
 
 export const LogIn = () => {
   const [users, setUsers] = useState([]);
-  // const [toLogin, setToLogin] = useState({});
   const [warning, setWarning] = useState("");
 
   const initUsers = async (name, pass) => {
@@ -36,37 +34,17 @@ export const LogIn = () => {
       console.log("login user:", name, pass, authPromise);
       setWarning("");
       window.location.reload(false);
-      // setToLogin(authPromise);
     } else {
       console.log("incorrect password", name, pass, authPromise);
       setWarning("Incorrect password");
-      // setToLogin({});
     }
   };
 
   useEffect(() => {
-    /*
-    console.log(
-      "who's logged in?",
-      Cookies.get("username"),
-      Cookies.get("id"),
-      Cookies.get("email"),
-      Cookies.get("password"),
-      Cookies.get("jwt")
-    );
-    */
     if (Cookies.get("cookieConfirm")) {
       initUsers("ghost", "jocKor-qufva5-vinqax");
     }
   }, []);
-
-  /*
-  if (users[0]) {
-    console.log("test login", users);
-  }
-  */
-
-  // console.log("cookie login test", Cookies.get("cookieConfirm"));
 
   return !Cookies.get("cookieConfirm") ? (
     <div className="cookie-confirm">

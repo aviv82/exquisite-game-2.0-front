@@ -1,7 +1,7 @@
 import "./App.css";
 
-// import { useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { Button } from "./component/button/Button";
 
@@ -17,15 +17,40 @@ import { LogIn } from "./pages/login/LogIn";
 import { Lobby } from "./pages/lobby/Lobby";
 import { Library } from "./pages/library/Library";
 import { Tale } from "./pages/tale/Tale";
+import { handleCookieConfirm } from "./handlers/handleCookieConfirm";
+import { handleCookieReject } from "./handlers/handleCookieReject";
+import { authenticate } from "./api/authenticate";
+import { useEffect } from "react";
 
 function App() {
-  return (
+  const initToken = async (name, pass) => {
+    const authPromise = await authenticate(name, pass);
+    Cookies.set("token", authPromise.jwt);
+  };
+
+  useEffect(() => {
+    if (Cookies.get("cookieConfirm")) {
+      initToken("ghost", "jocKor-qufva5-vinqax");
+    }
+  }, []);
+
+  return !Cookies.get("cookieConfirm") ? (
+    <div className="cookie-confirm">
+      <h2>confirm cookies</h2>
+      <Button
+        kind="submit"
+        title="confirm cookies"
+        face="green"
+        action={handleCookieConfirm}
+      ></Button>
+    </div>
+  ) : (
     <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
           <Route path="/lobby" element={<Lobby />} />
           <Route path="/library" element={<Library />} />
           <Route path="/tale" element={<Tale />} />
@@ -47,6 +72,17 @@ function App() {
             action={handleDelete}
           />
           <Button kind="button" title="auth" face="pink" action={handleAuth} />
+        </div>
+        <div className="reject-cookies">
+          <div className="cookie-confirm">
+            <h2>confirm cookies</h2>
+            <Button
+              kind="submit"
+              title="reject cookies"
+              face="red"
+              action={handleCookieReject}
+            ></Button>
+          </div>
         </div>
       </div>
     </Router>

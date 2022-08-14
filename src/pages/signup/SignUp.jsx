@@ -29,14 +29,6 @@ export const SignUp = () => {
     }
   }, []);
 
-  /*
-  if (users[0]) {
-    console.log("test signup", users);
-    // Cookies.set("id", users[0].id);
-    // console.log("cookie test", Cookies.get("id"));
-  }
-  */
-
   return !Cookies.get("cookieConfirm") ? (
     <div className="cookie-confirm">
       <h2>confirm cookies</h2>
