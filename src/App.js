@@ -5,11 +5,13 @@ import Cookies from "js-cookie";
 
 import { Button } from "./component/button/Button";
 
+/*
 import { handleGet } from "./handlers/handleGet";
 import { handlePost } from "./handlers/handlePost";
 import { handlePut } from "./handlers/handlePut";
 import { handleDelete } from "./handlers/handleDelete";
 import { handleAuth } from "./handlers/handleAuth";
+*/
 
 import { Home } from "./pages/Home/Home";
 import { SignUp } from "./pages/signup/SignUp";
@@ -55,7 +57,8 @@ function App() {
           <Route path="/library" element={<Library />} />
           <Route path="/tale" element={<Tale />} />
         </Routes>
-        <div className="api tests">
+
+        {/*<div className="api tests">
           <input type="input" placeholder="value"></input>
           <Button kind="button" title="get" face="green" action={handleGet} />
           <Button
@@ -72,10 +75,11 @@ function App() {
             action={handleDelete}
           />
           <Button kind="button" title="auth" face="pink" action={handleAuth} />
-        </div>
+  </div>*/}
+
         <div className="reject-cookies">
           <div className="cookie-confirm">
-            <h2>confirm cookies</h2>
+            <h2>reject cookies</h2>
             <Button
               kind="submit"
               title="reject cookies"
